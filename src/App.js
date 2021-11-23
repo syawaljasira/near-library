@@ -1,24 +1,23 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { booksSelector, fetchBooks } from './redux/slices/books';
+
+import Layout from './components/Layout';
+import RenderBooks from './components/RenderBooks';
 
 function App() {
+  const dispatch = useDispatch();
+  const { books, loading, errors } = useSelector(booksSelector);
+
+  useEffect(() => {
+    dispatch(fetchBooks());
+  }, [dispatch]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Layout>
+      <header>Best Sellers Book List</header>
+      <RenderBooks books={books} loading={loading} errors={errors} />
+    </Layout>
   );
 }
 
