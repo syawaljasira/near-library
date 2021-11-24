@@ -1,9 +1,13 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { booksSelector, fetchBooks } from './redux/slices/books';
+import { Route, Routes } from 'react-router-dom';
 
 import Layout from './components/Layout';
-import RenderBooks from './components/RenderBooks';
+import Home from './components/home';
+import Library from './components/library';
+import Login from './components/login';
+import BookDetails from './components/BookDetails';
 
 function App() {
   const dispatch = useDispatch();
@@ -15,8 +19,15 @@ function App() {
 
   return (
     <Layout>
-      <header>Best Sellers Book List</header>
-      <RenderBooks books={books} loading={loading} errors={errors} />
+      <Routes>
+        <Route
+          element={<Home books={books} loading={loading} errors={errors} />}
+          path="/"
+        />
+        <Route element={<Library />} path="/library" />
+        <Route element={<Login />} path="/login" />
+        <Route element={<BookDetails />} path="/book/:slug" />
+      </Routes>
     </Layout>
   );
 }

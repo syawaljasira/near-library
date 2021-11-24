@@ -1,4 +1,6 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+import slugify from 'react-slugify';
 
 const RenderBooks = ({ books: { results }, loading, errors }) => {
   if (loading) {
@@ -9,18 +11,27 @@ const RenderBooks = ({ books: { results }, loading, errors }) => {
   }
 
   console.log(results);
+
   return (
-    <>
+    <div className="flex flex-wrap">
       {results &&
-        results.map((book, index) => {
-          return (
-            <div key={index}>
-              <span>{book.display_name}</span>
-              <span>{book.list_name}</span>
-            </div>
-          );
+        results.lists.map((listBook) => {
+          return listBook.books.map((book, idx) => {
+            return (
+              <div className="w-3/12 p-5" key={idx}>
+                <Link to={`/book/${slugify(book.title)}`}>
+                  <img
+                    src={book.book_image}
+                    alt={`book-${idx}`}
+                    className="w-full"
+                  />
+                  <span>{book.title}</span>
+                </Link>
+              </div>
+            );
+          });
         })}
-    </>
+    </div>
   );
 };
 

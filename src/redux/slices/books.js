@@ -41,7 +41,7 @@ export function fetchBooks() {
 
     try {
       const { data } = await axios.get(
-        `https://api.nytimes.com/svc/books/v3/lists/names.json?api-key=${process.env.REACT_APP_NYT_APIKEY}`
+        `https://api.nytimes.com/svc/books/v3/lists/overview.json?api-key=${process.env.REACT_APP_NYT_APIKEY}`
       );
 
       dispatch(getBooksSuccess(data));
