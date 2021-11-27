@@ -4,50 +4,50 @@ import axios from 'axios';
 export const initialState = {
   loading: false,
   errors: false,
-  bookByList: {},
+  bookDetails: {},
 };
 
-export const bookByListSlice = createSlice({
-  name: 'bookByList',
+export const bookDetailsSlice = createSlice({
+  name: 'bookDetails',
   initialState,
   reducers: {
-    getBookByList: (state) => {
+    getBookDetails: (state) => {
       state.loading = true;
     },
-    getBookByListSuccess: (state, action) => {
-      state.bookByList = action.payload;
+    getBookDetailsSuccess: (state, action) => {
+      state.bookDetails = action.payload;
       state.loading = false;
       state.errors = false;
     },
-    getBookByListFail: (state) => {
+    getBookDetailsFail: (state) => {
       state.loading = false;
       state.errors = true;
     },
   },
 });
 
-export const { getBookByList, getBookByListSuccess, getBookByListFail } =
-  bookByListSlice.actions;
+export const { getBookDetails, getBookDetailsSuccess, getBookDetailsFail } =
+  bookDetailsSlice.actions;
 
 // The Selector
-export const bookByListSelector = (state) => state.bookByList;
+export const bookDetailsSelector = (state) => state.bookDetails;
 
 // The Reducer
-export default bookByListSlice.reducer;
+export default bookDetailsSlice.reducer;
 
 // Async Thunk
-export function fetchBookByList(list_name_encoded) {
+export function fetchBookDetails(list_name_encoded) {
   return async (dispatch) => {
-    dispatch(getBookByList());
+    dispatch(getBookDetails());
 
     try {
       const { data } = await axios.get(
         `https://api.nytimes.com/svc/books/v3/lists/current/${list_name_encoded}.json?api-key=${process.env.REACT_APP_NYT_APIKEY}`
       );
 
-      dispatch(getBookByListSuccess(data));
+      dispatch(getBookDetailsSuccess(data));
     } catch (errors) {
-      dispatch(getBookByListFail());
+      dispatch(getBookDetailsFail());
     }
   };
 }

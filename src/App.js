@@ -7,15 +7,17 @@ import Home from './components/home';
 import Library from './components/library';
 import Login from './components/login';
 import BookDetails from './components/BookDetails';
+import BookByList from './components/BookByList';
 
-function App() {
+function App({ contract, currentUser, nearConfig, walletConnection }) {
   return (
     <Layout>
       <Routes>
         <Route element={<Home />} path="/" />
         <Route element={<Library />} path="/library" />
         <Route element={<Login />} path="/login" />
-        <Route element={<BookDetails />} path="/book/:slug" />
+        <Route element={<BookByList />} path="/list/:slug" />
+        <Route element={<BookDetails />} path="/:list/:slug-:id" />
       </Routes>
     </Layout>
   );
