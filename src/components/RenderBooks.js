@@ -1,15 +1,24 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import slugify from 'react-slugify';
 import { fetchBookByList } from '../redux/slices/bookByList';
 import classNames from 'classnames';
 import { MdArrowForwardIos } from 'react-icons/md';
 import { fetchBookDetails } from '../redux/slices/bookDetails';
+import { readListsSelector } from '../redux/slices/readLists';
 
-const RenderBooks = ({ books: { results }, loading, errors }) => {
+const RenderBooks = ({
+  books: { results },
+  loading,
+  errors,
+  addBookHandler,
+}) => {
   const dispatch = useDispatch();
 
+  const { library } = useSelector(readListsSelector);
+
+  console.log(library);
   if (loading) {
     return <div>Loading books...</div>;
   }
@@ -84,7 +93,10 @@ const RenderBooks = ({ books: { results }, loading, errors }) => {
                         {book.description}
                       </span>
                     </div>
-                    <button className="px-3 text-sm flex items-end py-1 mx-2 rounded-md bg-indigo-400 text-gray-100">
+                    <button
+                      onClick={() => addBookHandler(book)}
+                      className="px-3 text-sm flex items-end py-1 mx-2 rounded-md bg-indigo-400 text-gray-100"
+                    >
                       <span>Want to read</span>
                     </button>
                   </div>

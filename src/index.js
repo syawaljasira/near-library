@@ -40,8 +40,8 @@ async function initContract() {
     walletConnection.account(),
     nearConfig.contractName,
     {
-      viewMethods: ['getMessages'],
-      changeMethods: ['addMessage'],
+      viewMethods: ['get_book', 'get_books'],
+      changeMethods: ['add_book', 'update_book', 'delete_book'],
       sender: walletConnection.getAccountId,
     }
   );
@@ -59,7 +59,7 @@ window.nearInitPromise = initContract().then(
               contract={contract}
               currentUser={currentUser}
               nearConfig={nearConfig}
-              walletConnection={walletConnection}
+              wallet={walletConnection}
             />
           </Router>
         </Provider>

@@ -11,7 +11,7 @@ import {
 } from '../redux/slices/bookByList';
 import { fetchBookDetails } from '../redux/slices/bookDetails';
 
-const BookByList = () => {
+const BookByList = ({ addBookHandler }) => {
   const dispatch = useDispatch();
   const { slug } = useParams();
   const {
@@ -81,7 +81,10 @@ const BookByList = () => {
                 {book.description}
               </span>
             </div>
-            <button className="px-3 text-sm flex items-end py-1 mx-2 rounded-md bg-indigo-400 text-gray-100">
+            <button
+              onClick={() => addBookHandler(book)}
+              className="px-3 text-sm flex items-end py-1 mx-2 rounded-md bg-indigo-400 text-gray-100"
+            >
               <span>Want to read</span>
             </button>
           </div>

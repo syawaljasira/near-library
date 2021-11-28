@@ -1,4 +1,4 @@
-const CONTRACT_NAME = process.env.CONTRACT_NAME || 'syawal.testnet';
+const CONTRACT_NAME = process.env.REACT_APP_CONTRACT_NAME || 'syawal.testnet';
 
 function getConfig(env) {
   switch (env) {
