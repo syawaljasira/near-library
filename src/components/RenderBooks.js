@@ -1,12 +1,11 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import slugify from 'react-slugify';
 import { fetchBookByList } from '../redux/slices/bookByList';
 import classNames from 'classnames';
 import { MdArrowForwardIos } from 'react-icons/md';
 import { fetchBookDetails } from '../redux/slices/bookDetails';
-import { readListsSelector } from '../redux/slices/readLists';
 
 const RenderBooks = ({
   books: { results },
@@ -16,17 +15,12 @@ const RenderBooks = ({
 }) => {
   const dispatch = useDispatch();
 
-  const { library } = useSelector(readListsSelector);
-
-  console.log(library);
   if (loading) {
     return <div>Loading books...</div>;
   }
   if (errors) {
     return <div>Unable to display books</div>;
   }
-
-  console.log(results);
 
   return (
     <div className="flex p-3 flex-wrap">

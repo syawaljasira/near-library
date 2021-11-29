@@ -16,6 +16,9 @@ import {
   deleteReadListFail,
   deleteReadListRequest,
   deleteReadListSuccess,
+  updateReadListFail,
+  updateReadListRequest,
+  updateReadListSuccess,
 } from './redux/slices/readLists';
 
 function App({ contract, currentUser, nearConfig, wallet }) {
@@ -62,8 +65,24 @@ function App({ contract, currentUser, nearConfig, wallet }) {
       await contract.delete_book({ book_id });
       dispatch(deleteReadListSuccess());
       console.log('Success delete the book');
+      window.location.reload();
     } catch (error) {
       dispatch(deleteReadListFail());
+      console.error(error);
+    }
+  };
+
+  const updateBookHandler = async (book, status) => {
+    dispatch(updateReadListRequest());
+
+    try {
+      await contract.update_book({ book_id: book.book_id, status });
+      dispatch(updateReadListSuccess());
+      console.log('Success update the book');
+      navigate('/library');
+      window.location.reload();
+    } catch (error) {
+      dispatch(updateReadListFail());
       console.error(error);
     }
   };
@@ -94,6 +113,7 @@ function App({ contract, currentUser, nearConfig, wallet }) {
               deleteBookHandler={deleteBookHandler}
               wallet={wallet}
               contract={contract}
+              updateBookHandler={updateBookHandler}
             />
           }
           path="/library"

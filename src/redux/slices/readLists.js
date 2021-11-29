@@ -39,17 +39,17 @@ export const readListsSlice = createSlice({
       state.loading = false;
       state.errors = true;
     },
-    updateReadList: (state, action) => {
-      const readList = state.library.readLists.filter(
-        (book) => book.book_id === action.payload.book_id
-      );
-      return {
-        ...state,
-        library: {
-          ...state.library,
-          readLists: { ...state.library.readLists, status: readList.status },
-        },
-      };
+    updateReadListRequest: (state) => {
+      state.loading = true;
+      state.errors = false;
+    },
+    updateReadListSuccess: (state) => {
+      state.loading = false;
+      state.errors = false;
+    },
+    updateReadListFail: (state) => {
+      state.loading = false;
+      state.errors = true;
     },
   },
 });
@@ -61,7 +61,9 @@ export const {
   deleteReadListRequest,
   deleteReadListSuccess,
   deleteReadListFail,
-  updateReadList,
+  updateReadListRequest,
+  updateReadListSuccess,
+  updateReadListFail,
 } = readListsSlice.actions;
 
 // The Selector
@@ -69,5 +71,3 @@ export const readListsSelector = (state) => state.library;
 
 // The Reducer
 export default readListsSlice.reducer;
-
-// Async Thunk

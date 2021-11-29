@@ -2,7 +2,12 @@ import classNames from 'classnames';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
-const Library = ({ contract, wallet, deleteBookHandler }) => {
+const Library = ({
+  contract,
+  wallet,
+  deleteBookHandler,
+  updateBookHandler,
+}) => {
   const [books, setBooks] = useState(null);
   const [loading, setLoading] = useState(false);
 
@@ -28,7 +33,7 @@ const Library = ({ contract, wallet, deleteBookHandler }) => {
       setLoading(false);
       console.error(error);
     }
-  }, [contract, wallet, books]);
+  }, [contract, wallet]);
 
   console.log(books);
 
@@ -78,6 +83,12 @@ const Library = ({ contract, wallet, deleteBookHandler }) => {
                   className="px-3 text-sm flex items-end py-1 mx-2 rounded-md bg-indigo-400 text-gray-100"
                 >
                   <span>Delete</span>
+                </button>
+                <button
+                  onClick={() => updateBookHandler(book, 'Read')}
+                  className="px-3 text-sm flex items-end py-1 mx-2 rounded-md bg-indigo-400 text-gray-100"
+                >
+                  <span>Read</span>
                 </button>
               </div>
             );
