@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import { Route, Routes, useNavigate } from 'react-router-dom';
 
@@ -87,12 +87,6 @@ function App({ contract, currentUser, nearConfig, wallet }) {
     }
   };
 
-  useEffect(() => {
-    if (!wallet.isSignedIn()) {
-      navigate('/signin');
-    }
-  }, [wallet, navigate]);
-
   return (
     <Layout userSignOut={userSignOut} currentUser={currentUser}>
       <Routes>
@@ -102,28 +96,39 @@ function App({ contract, currentUser, nearConfig, wallet }) {
               currentUser={currentUser}
               userSignIn={userSignIn}
               userSignOut={userSignOut}
+              wallet={wallet}
             />
           }
           path="/signin"
         />
-        <Route element={<Home addBookHandler={addBookHandler} />} path="/" />
+        <Route
+          element={
+            <Home currentUser={currentUser} addBookHandler={addBookHandler} />
+          }
+          path="/"
+        />
         <Route
           element={
             <Library
               deleteBookHandler={deleteBookHandler}
-              wallet={wallet}
+              currentUser={currentUser}
               contract={contract}
               updateBookHandler={updateBookHandler}
+              wallet={wallet}
             />
           }
           path="/library"
         />
         <Route
-          element={<BookByList addBookHandler={addBookHandler} />}
+          element={
+            <BookByList wallet={wallet} addBookHandler={addBookHandler} />
+          }
           path="/list/:slug"
         />
         <Route
-          element={<BookDetails addBookHandler={addBookHandler} />}
+          element={
+            <BookDetails wallet={wallet} addBookHandler={addBookHandler} />
+          }
           path="/:list/:slug-:id"
         />
       </Routes>

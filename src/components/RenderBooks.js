@@ -23,7 +23,7 @@ const RenderBooks = ({
   }
 
   return (
-    <div className="flex p-3 flex-wrap">
+    <div id="bestseller-list" className="flex p-3 flex-wrap">
       {results &&
         results.lists.map((listBook, index) => {
           return (
@@ -89,7 +89,7 @@ const RenderBooks = ({
                     </div>
                     <button
                       onClick={() => addBookHandler(book)}
-                      className="px-3 text-sm flex items-end py-1 mx-2 rounded-md bg-indigo-400 text-gray-100"
+                      className="px-3 text-sm flex items-end py-1 mx-2 rounded-md bg-blue-800 hover:bg-blue-700 text-gray-100"
                     >
                       <span>Want to read</span>
                     </button>

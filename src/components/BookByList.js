@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import slugify from 'react-slugify';
 
 import {
@@ -11,8 +11,9 @@ import {
 } from '../redux/slices/bookByList';
 import { fetchBookDetails } from '../redux/slices/bookDetails';
 
-const BookByList = ({ addBookHandler }) => {
+const BookByList = ({ addBookHandler, wallet }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { slug } = useParams();
   const {
     bookByList: { results },
@@ -21,10 +22,14 @@ const BookByList = ({ addBookHandler }) => {
   } = useSelector(bookByListSelector);
 
   useEffect(() => {
+    if (!wallet.isSignedIn()) {
+      navigate('/signin');
+    }
+
     if (!results) {
       dispatch(fetchBookByList(slug));
     }
-  }, [dispatch, results, slug]);
+  }, [dispatch, navigate, results, slug, wallet]);
 
   if (loading) {
     return <div>Loading books...</div>;
@@ -36,9 +41,9 @@ const BookByList = ({ addBookHandler }) => {
   console.log(results);
 
   return results ? (
-    <div className="w-full p-5 flex flex-wrap justify-around">
+    <div className="w-full pt-20 p-5 flex flex-wrap justify-around">
       <div className="w-full mb-10 text-xl font-bold text-gray-800 text-center">
-        <span className="border-b-2 border-indigo-300 pb-1 px-3">
+        <span className="border-b-2 border-blue-700 pb-1 px-3">
           {results.display_name}
         </span>
       </div>
@@ -83,7 +88,7 @@ const BookByList = ({ addBookHandler }) => {
             </div>
             <button
               onClick={() => addBookHandler(book)}
-              className="px-3 text-sm flex items-end py-1 mx-2 rounded-md bg-indigo-400 text-gray-100"
+              className="px-3 text-sm flex items-end py-1 mx-2 rounded-md bg-blue-800 hover:bg-blue-700 text-blue-100"
             >
               <span>Want to read</span>
             </button>

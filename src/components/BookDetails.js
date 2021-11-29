@@ -1,18 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import {
   bookDetailsSelector,
   fetchBookDetails,
 } from '../redux/slices/bookDetails';
 
-const BookDetails = () => {
+const BookDetails = ({ wallet }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { list, id } = useParams();
   const [detailBook, setDetailBook] = useState(null);
   const { bookDetails, loading, errors } = useSelector(bookDetailsSelector);
 
   useEffect(() => {
+    if (!wallet.isSignedIn()) {
+      navigate('/signin');
+    }
+
     if (!bookDetails.results) {
       dispatch(fetchBookDetails(list));
     }
@@ -25,7 +30,7 @@ const BookDetails = () => {
       }
       setDetailBook(getDetail(bookDetails));
     }
-  }, [dispatch, bookDetails, list, id]);
+  }, [dispatch, bookDetails, list, id, wallet, navigate]);
 
   if (loading) {
     return <div>Loading data...</div>;
@@ -49,7 +54,7 @@ const BookDetails = () => {
     console.log(detailBook);
 
     return (
-      <div className="flex">
+      <div className="flex pt-20">
         <div className="w-6/12 p-3">
           <img
             src={book_image}
@@ -59,13 +64,15 @@ const BookDetails = () => {
             className="mx-auto"
           />
         </div>
-        <div className="w-6/12 p-3 flex flex-col space-y-3">
-          <h1 className="capitalize">Book Title: {book_title.toLowerCase()}</h1>
-          <span>Author: {author}</span>
-          <span>Publisher: {publisher}</span>
-          <div>
-            <span>Description:</span>
-            <p>{description}</p>
+        <div className="w-4/12 p-3 px-10 flex flex-col space-y-3">
+          <h1 className="capitalize text-3xl font-bold text-gray-800">
+            Title: {book_title.toLowerCase()}
+          </h1>
+          <span className="text-xl text-gray-700">Author: {author}</span>
+          <span className="text-xl text-gray-700">Publisher: {publisher}</span>
+          <div className="text-xl text-gray-700 space-y-2">
+            <span>Description Book:</span>
+            <p className="font-light">{description}</p>
           </div>
         </div>
       </div>

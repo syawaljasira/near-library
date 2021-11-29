@@ -1,7 +1,6 @@
 import classNames from 'classnames';
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import MyList from './MyList';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Library = ({
   contract,
@@ -11,9 +10,14 @@ const Library = ({
 }) => {
   const [books, setBooks] = useState(null);
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
   const [page, setPage] = useState('List');
 
   useEffect(() => {
+    if (!wallet.isSignedIn()) {
+      navigate('/signin');
+    }
+
     setLoading(true);
 
     try {
@@ -35,7 +39,7 @@ const Library = ({
       setLoading(false);
       console.error(error);
     }
-  }, [contract, wallet]);
+  }, [contract, navigate, wallet]);
 
   const pageHandler = (pageName) => {
     setPage(pageName);
@@ -48,7 +52,7 @@ const Library = ({
   }
 
   return (
-    <div className="w-full p-5 flex flex-wrap justify-around">
+    <div className="w-full pt-20 p-5 flex flex-wrap justify-around">
       <div className="w-full flex my-10">
         <div className="w-4/12 border border-gray-300 flex mx-auto bg-gray-200">
           <button
@@ -99,17 +103,28 @@ const Library = ({
                     {book.description}
                   </span>
                 </div>
+                {page === 'List' ? (
+                  <button
+                    onClick={() => updateBookHandler(book, 'Read')}
+                    className="px-3 text-sm flex items-end py-1 mx-2 rounded-md bg-blue-800 hover:bg-blue-700 text-gray-100"
+                  >
+                    <span>Read</span>
+                  </button>
+                ) : page === 'Read' ? (
+                  <button
+                    onClick={() => updateBookHandler(book, 'Finished')}
+                    className="px-3 text-sm flex items-end py-1 mx-2 rounded-md bg-blue-800 hover:bg-blue-700 text-gray-100"
+                  >
+                    <span>Finished Read</span>
+                  </button>
+                ) : (
+                  <span></span>
+                )}
                 <button
                   onClick={() => deleteBookHandler(book.book_id)}
-                  className="px-3 text-sm flex items-end py-1 mx-2 rounded-md bg-indigo-400 text-gray-100"
+                  className="px-3 text-sm flex items-end py-1 ml-auto mr-2 rounded-md bg-red-500 hover:bg-red-400 text-gray-100"
                 >
                   <span>Delete</span>
-                </button>
-                <button
-                  onClick={() => updateBookHandler(book, 'Read')}
-                  className="px-3 text-sm flex items-end py-1 mx-2 rounded-md bg-indigo-400 text-gray-100"
-                >
-                  <span>Read</span>
                 </button>
               </div>
             ) : (
