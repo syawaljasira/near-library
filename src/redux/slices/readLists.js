@@ -5,8 +5,6 @@ export const initialState = {
   errors: false,
   library: {
     readLists: [],
-    readingLists: [],
-    finishedLists: [],
   },
 };
 
