@@ -6,7 +6,7 @@ import {
   fetchBookDetails,
 } from '../redux/slices/bookDetails';
 
-const BookDetails = ({ wallet }) => {
+const BookDetails = ({ wallet, addBookHandler }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { list, id } = useParams();
@@ -54,8 +54,8 @@ const BookDetails = ({ wallet }) => {
     console.log(detailBook);
 
     return (
-      <div className="flex pt-20">
-        <div className="w-6/12 p-3">
+      <div className="flex flex-wrap sm:flex-nowrap pt-20">
+        <div className="w-10/12 md:w-6/12 mx-auto p-3">
           <img
             src={book_image}
             alt={book_title}
@@ -64,16 +64,22 @@ const BookDetails = ({ wallet }) => {
             className="mx-auto"
           />
         </div>
-        <div className="w-4/12 p-3 px-10 flex flex-col space-y-3">
+        <div className="w-full md:w-6/12 xl:w-5/12 p-3 px-10 flex flex-col space-y-3">
           <h1 className="capitalize text-3xl font-bold text-gray-800">
             Title: {book_title.toLowerCase()}
           </h1>
           <span className="text-xl text-gray-700">Author: {author}</span>
           <span className="text-xl text-gray-700">Publisher: {publisher}</span>
-          <div className="text-xl text-gray-700 space-y-2">
+          <div className="text-xl pb-6 text-gray-700 space-y-2">
             <span>Description Book:</span>
             <p className="font-light">{description}</p>
           </div>
+          <button
+            onClick={() => addBookHandler(detailBook[0])}
+            className="w-6/12 md:w-10/12 lg:w-6/12 px-3 py-1 rounded-md bg-blue-800 hover:bg-blue-700 text-blue-100"
+          >
+            <span>Want to read</span>
+          </button>
         </div>
       </div>
     );

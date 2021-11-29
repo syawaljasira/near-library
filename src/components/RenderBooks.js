@@ -47,7 +47,7 @@ const RenderBooks = ({
               {listBook.books.map((book, idx) => {
                 return (
                   <div
-                    className="w-2/12 flex rounded-lg shadow-md border border-gray-200 flex-wrap space-y-2"
+                    className="w-full sm:w-5/12 md:w-3/12 md:mx-3 lg:mx-0 lg:w-2/12 my-8 md:my-3 flex rounded-lg shadow-md border border-gray-200 flex-wrap space-y-2"
                     key={idx}
                   >
                     <div className="w-full text-center h-52 flex px-8 justify-center">

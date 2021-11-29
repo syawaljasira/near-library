@@ -26,7 +26,7 @@ const Library = ({
           .get_books({
             account_id: wallet.getAccountId(),
             skip: 0,
-            limit: 40,
+            limit: 20,
           })
           .then(setBooks)
           .then(() => setLoading(false))
@@ -54,7 +54,7 @@ const Library = ({
   return (
     <div className="w-full pt-20 p-5 flex flex-wrap justify-around">
       <div className="w-full flex my-10">
-        <div className="w-4/12 border border-gray-300 flex mx-auto bg-gray-200">
+        <div className="w-9/12 lg:w-4/12 border border-gray-300 flex mx-auto bg-gray-200">
           <button
             onClick={() => pageHandler('List')}
             className="w-full py-1 border border-gray-300 hover:bg-gray-300"
@@ -80,7 +80,7 @@ const Library = ({
           {books.map((book) => {
             return book.status === page ? (
               <div
-                className="w-2/12 mx-2 flex my-10 rounded-lg shadow-md border border-gray-200 flex-wrap space-y-2"
+                className="w-full sm:w-5/12 md:w-3/12 lg:w-2/12 mx-2 flex my-10 rounded-lg shadow-md border border-gray-200 flex-wrap space-y-2"
                 key={book.book_id}
               >
                 <div className="w-full text-center h-52 flex px-8 justify-center">
