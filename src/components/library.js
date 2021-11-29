@@ -128,7 +128,7 @@ const Library = ({
                 </button>
               </div>
             ) : (
-              <span></span>
+              <span key={book.book_id}></span>
             );
           })}
         </>

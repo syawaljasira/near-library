@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 const Navbar = ({ currentUser, userSignOut }) => {
   return (
     <nav className="w-full flex absolute bg-blue-900 text-blue-100 justify-between p-4">
-      <div className="ml-5 text-xl">
+      <div className="ml-5 text-xl font-serif font-semibold">
         <Link to="/">Near Library</Link>
       </div>
       <ul className="flex space-x-6 mr-5">

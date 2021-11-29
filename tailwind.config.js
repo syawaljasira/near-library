@@ -38,6 +38,10 @@ module.exports = {
       maxHeight: {
         layout: '80vh',
       },
+      fontFamily: {
+        sans: ['Lato', 'sans-serif'],
+        serif: ['Martel', 'serif'],
+      },
     },
   },
   variants: {

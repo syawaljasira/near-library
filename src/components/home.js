@@ -22,7 +22,9 @@ const Home = ({ addBookHandler, currentUser }) => {
           className="w-3/5 h-2/3"
         />
         <div className="w-2/5 pl-4 pr-8">
-          <h1 className="text-4xl font-semibold text-blue-200">Near Library</h1>
+          <h1 className="text-4xl font-serif font-bold text-blue-200">
+            Near Library
+          </h1>
           <p className="text-xl mt-5 tracking-wide">
             Let's found some great books from the bestseller books.
           </p>
