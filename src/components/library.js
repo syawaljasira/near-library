@@ -1,6 +1,7 @@
 import classNames from 'classnames';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import MyList from './MyList';
 
 const Library = ({
   contract,
@@ -10,6 +11,7 @@ const Library = ({
 }) => {
   const [books, setBooks] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [page, setPage] = useState('List');
 
   useEffect(() => {
     setLoading(true);
@@ -35,6 +37,10 @@ const Library = ({
     }
   }, [contract, wallet]);
 
+  const pageHandler = (pageName) => {
+    setPage(pageName);
+  };
+
   console.log(books);
 
   if (loading) {
@@ -43,17 +49,32 @@ const Library = ({
 
   return (
     <div className="w-full p-5 flex flex-wrap justify-around">
-      {books === null && !loading ? (
-        <div>
-          Your read list is empty... Back to{' '}
-          <Link className="hover:underline" to="/">
-            Home
-          </Link>
+      <div className="w-full flex my-10">
+        <div className="w-4/12 border border-gray-300 flex mx-auto bg-gray-200">
+          <button
+            onClick={() => pageHandler('List')}
+            className="w-full py-1 border border-gray-300 hover:bg-gray-300"
+          >
+            Books
+          </button>
+          <button
+            onClick={() => pageHandler('Read')}
+            className="w-full py-1 border border-gray-300 hover:bg-gray-300"
+          >
+            Reads
+          </button>
+          <button
+            onClick={() => pageHandler('Finished')}
+            className="w-full py-1 border border-gray-300 hover:bg-gray-300"
+          >
+            Finished
+          </button>
         </div>
-      ) : (
+      </div>
+      {books !== null && !loading ? (
         <>
           {books.map((book) => {
-            return (
+            return book.status === page ? (
               <div
                 className="w-2/12 mx-2 flex my-10 rounded-lg shadow-md border border-gray-200 flex-wrap space-y-2"
                 key={book.book_id}
@@ -91,9 +112,18 @@ const Library = ({
                   <span>Read</span>
                 </button>
               </div>
+            ) : (
+              <span></span>
             );
           })}
         </>
+      ) : (
+        <div>
+          Your read list is empty... Back to{' '}
+          <Link className="hover:underline" to="/">
+            Home
+          </Link>
+        </div>
       )}
     </div>
   );
