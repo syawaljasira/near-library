@@ -2,6 +2,15 @@ const CONTRACT_NAME = process.env.REACT_APP_CONTRACT_NAME || 'syawal.testnet';
 
 function getConfig(env) {
   switch (env) {
+    case 'mainnet':
+      return {
+        networkId: 'mainnet',
+        nodeUrl: 'https://rpc.mainnet.near.org',
+        contractName: CONTRACT_NAME,
+        walletUrl: 'https://wallet.near.org',
+        helperUrl: 'https://helper.mainnet.near.org',
+      };
+    case 'production':
     case 'development':
     case 'testnet':
       return {
